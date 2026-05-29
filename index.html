@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed Elashry | Builder • Reverse Engineer • AI</title>
+    <meta name="description" content="Portfolio of Ahmed Elashry - Builder, Reverse Engineer, and AI + Systems Developer.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black text-white selection:bg-white selection:text-black">
+    
+    <!-- Loading Boot Sequence -->
+    <div id="boot-sequence" class="fixed inset-0 bg-black z-[10000] flex flex-col justify-center p-8 md:p-24 font-mono text-xs md:text-sm text-white overflow-hidden">
+        <div id="boot-log" class="max-w-xl"></div>
+    </div>
+
+    <!-- Background System Artifacts -->
+    <div class="noise-overlay"></div>
+    <div class="scanlines"></div>
+    <div id="probe-cursor"></div>
+    
+    <!-- System Metadata Overlays -->
+    <div class="system-meta top-left font-mono text-[10px] opacity-30 fixed top-4 left-4 z-[1001] pointer-events-none">
+        LOC: 30.0444° N, 31.2357° E<br>
+        ALT: 22m MSL
+    </div>
+    <div class="system-meta top-right font-mono text-[10px] opacity-30 fixed top-4 right-4 z-[1001] pointer-events-none text-right">
+        STATUS: SECURE<br>
+        UPLINK: ACTIVE
+    </div>
+    <div class="system-meta bottom-left font-mono text-[10px] opacity-30 fixed bottom-4 left-4 z-[1001] pointer-events-none">
+        OS: ARCH_V2.1.0_PROBE<br>
+        ENCRYPTION: AES-256-GCM
+    </div>
+    <div class="system-meta bottom-right font-mono text-[10px] opacity-30 fixed bottom-4 right-4 z-[1001] pointer-events-none text-right">
+        RADAR: SWEEPING...<br>
+        <span id="system-time">00:00:00</span>
+    </div>
+
+    <header class="fixed-nav">
+        <div class="container flex justify-between items-center py-6">
+            <div class="logo font-mono text-sm tracking-tighter">
+                <span class="opacity-50">SYSTEM_ID:</span> AHMED_ELASHRY
+            </div>
+            <nav>
+                <ul class="flex gap-8 font-mono text-xs uppercase tracking-widest">
+                    <li><a href="#projects" class="hover:opacity-100 opacity-50 transition-opacity">01. Projects</a></li>
+                    <li><a href="#about" class="hover:opacity-100 opacity-50 transition-opacity">02. About</a></li>
+                    <li><a href="#contact" class="hover:opacity-100 opacity-50 transition-opacity">03. Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="min-h-screen flex items-center pt-24" id="hero">
+            <div class="container relative">
+                <div class="hero-content max-w-3xl">
+                    <h1 class="text-7xl md:text-9xl font-bold tracking-tighter leading-none mb-8">
+                        AHMED<br>ELASHRY
+                    </h1>
+                    <p class="text-lg md:text-xl font-mono text-neutral-400 mb-8">
+                        Builder • Reverse Engineer • AI + Systems Developer
+                    </p>
+                    <div class="mb-12 flex items-center gap-4">
+                        <span class="inline-block px-3 py-1 border border-white/20 font-mono text-[10px] uppercase tracking-widest bg-white/5">
+                            National ISEF Finalist 2026
+                        </span>
+                        <span class="h-px w-12 bg-white/20"></span>
+                    </div>
+                    <p class="text-xl md:text-2xl leading-relaxed mb-12 font-light">
+                        I build things that sit between software, hardware, and experimentation — from ONNX-powered browser extensions to Flutter apps, low-level networking projects, and signal-processing concepts.
+                    </p>
+                    <div class="flex gap-6 font-mono text-sm underline underline-offset-8">
+                        <a href="#" class="hover:text-neutral-400 transition-colors">[ GitHub ]</a>
+                        <a href="#projects" class="hover:text-neutral-400 transition-colors">[ Projects ]</a>
+                        <a href="#contact" class="hover:text-neutral-400 transition-colors">[ Contact ]</a>
+                    </div>
+                </div>
+                <div class="hero-visual absolute right-0 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none hidden lg:block">
+                    <!-- Enhanced Technical Schematic -->
+                    <svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="250" cy="250" r="249" stroke="white" stroke-opacity="0.2" stroke-dasharray="2 2"/>
+                        <circle cx="250" cy="250" r="200" stroke="white" stroke-opacity="0.1"/>
+                        <path d="M250 0V500" stroke="white" stroke-opacity="0.2" stroke-dasharray="4 4"/>
+                        <path d="M0 250H500" stroke="white" stroke-opacity="0.2" stroke-dasharray="4 4"/>
+                        <!-- Scanning line -->
+                        <line x1="0" y1="0" x2="500" y2="0" stroke="white" stroke-opacity="0.5" stroke-width="2">
+                            <animate attributeName="y1" from="0" to="500" dur="4s" repeatCount="indefinite" />
+                            <animate attributeName="y2" from="0" to="500" dur="4s" repeatCount="indefinite" />
+                        </line>
+                        <!-- Random nodes -->
+                        <rect x="245" y="45" width="10" height="10" fill="white" fill-opacity="0.5" />
+                        <rect x="245" y="445" width="10" height="10" fill="white" fill-opacity="0.5" />
+                        <rect x="45" y="245" width="10" height="10" fill="white" fill-opacity="0.5" />
+                        <rect x="445" y="245" width="10" height="10" fill="white" fill-opacity="0.5" />
+                        <!-- Geometric data -->
+                        <path d="M100 100L400 400M100 400L400 100" stroke="white" stroke-opacity="0.05" />
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Short Bio -->
+        <section class="py-32 border-t border-white/10" id="about">
+            <div class="container grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-8">00. Background</h2>
+                    <p class="text-xl leading-relaxed font-light">
+                        I’m a developer focused on practical engineering, AI integration, and systems-level problem solving. My work ranges from browser extensions and mobile apps to backend infrastructure and experimental sensing ideas involving RF and seismic analysis.
+                    </p>
+                </div>
+                <div>
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-8">00. Focus Areas</h2>
+                    <ul class="space-y-4 font-mono text-sm">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-white"></span> Reverse engineering and protocol analysis</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-white"></span> AI inference with ONNX</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-white"></span> Flutter app development</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-white"></span> Networking and embedded systems</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-white"></span> Security research and low-level debugging</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="py-32 border-y border-white/10" id="projects">
+            <div class="container">
+                <div class="flex justify-between items-end mb-16">
+                    <h2 class="text-4xl md:text-6xl font-bold tracking-tighter">SELECTED_WORKS</h2>
+                    <span class="font-mono text-xs opacity-50 uppercase tracking-widest">Total: 03</span>
+                </div>
+
+                <div class="project-grid flex flex-col">
+                    <!-- Project 1 -->
+                    <article class="project-item border-b border-white/10 py-12 group hover:bg-neutral-900/50 transition-all cursor-crosshair">
+                        <div class="flex flex-col md:flex-row justify-between gap-8 px-4">
+                            <div class="md:w-1/3">
+                                <span class="font-mono text-xs opacity-50">01. BROWSER_EXTENSION</span>
+                                <h3 class="text-3xl font-bold mt-2">Sentiment Highlighter</h3>
+                            </div>
+                            <div class="md:w-1/2">
+                                <p class="text-neutral-400 mb-6 font-light">
+                                    Chrome extension that analyzes website comments using an ONNX sentiment model and visually highlights comments by sentiment.
+                                </p>
+                                <div class="flex flex-wrap gap-3 font-mono text-[10px] uppercase">
+                                    <span class="border border-white/20 px-2 py-1">JavaScript</span>
+                                    <span class="border border-white/20 px-2 py-1">ONNX Runtime</span>
+                                    <span class="border border-white/20 px-2 py-1">Chrome API</span>
+                                </div>
+                            </div>
+                            <div class="md:w-1/6 flex items-start justify-end">
+                                <span class="text-2xl group-hover:translate-x-2 transition-transform">→</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2 -->
+                    <article class="project-item border-b border-white/10 py-12 group hover:bg-neutral-900/50 transition-all cursor-crosshair">
+                        <div class="flex flex-col md:flex-row justify-between gap-8 px-4">
+                            <div class="md:w-1/3">
+                                <span class="font-mono text-xs opacity-50">02. BACKEND_API</span>
+                                <h3 class="text-3xl font-bold mt-2">IELTS AI Scoring</h3>
+                            </div>
+                            <div class="md:w-1/2">
+                                <p class="text-neutral-400 mb-6 font-light">
+                                    Node.js backend for automated IELTS scoring with authentication and persistent storage.
+                                </p>
+                                <div class="flex flex-wrap gap-3 font-mono text-[10px] uppercase">
+                                    <span class="border border-white/20 px-2 py-1">Node.js</span>
+                                    <span class="border border-white/20 px-2 py-1">MySQL</span>
+                                    <span class="border border-white/20 px-2 py-1">JWT</span>
+                                    <span class="border border-white/20 px-2 py-1">ONNX</span>
+                                </div>
+                            </div>
+                            <div class="md:w-1/6 flex items-start justify-end">
+                                <span class="text-2xl group-hover:translate-x-2 transition-transform">→</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3 -->
+                    <article class="project-item border-b border-white/10 py-12 group hover:bg-neutral-900/50 transition-all cursor-crosshair">
+                        <div class="flex flex-col md:flex-row justify-between gap-8 px-4">
+                            <div class="md:w-1/3">
+                                <span class="font-mono text-xs opacity-50">03. MOBILE_APP</span>
+                                <h3 class="text-3xl font-bold mt-2">Animated Flutter Todo</h3>
+                            </div>
+                            <div class="md:w-1/2">
+                                <p class="text-neutral-400 mb-6 font-light">
+                                    A modern Flutter task-management app with local persistence logic for completed tasks.
+                                </p>
+                                <div class="flex flex-wrap gap-3 font-mono text-[10px] uppercase">
+                                    <span class="border border-white/20 px-2 py-1">Flutter</span>
+                                    <span class="border border-white/20 px-2 py-1">Dart</span>
+                                    <span class="border border-white/20 px-2 py-1">SharedPreferences</span>
+                                </div>
+                            </div>
+                            <div class="md:w-1/6 flex items-start justify-end">
+                                <span class="text-2xl group-hover:translate-x-2 transition-transform">→</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Interests & Philosophy -->
+        <section class="py-32">
+            <div class="container grid grid-cols-1 md:grid-cols-3 gap-16">
+                <div class="md:col-span-2">
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-12">Technical_Interests</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-12">
+                        <div class="interest-block">
+                            <h4 class="font-bold text-lg mb-4">AI + Inference</h4>
+                            <p class="text-neutral-400 text-sm font-light leading-relaxed">ONNX model deployment, lightweight inference systems, edge/browser AI.</p>
+                        </div>
+                        <div class="interest-block">
+                            <h4 class="font-bold text-lg mb-4">Systems & Networking</h4>
+                            <p class="text-neutral-400 text-sm font-light leading-relaxed">Traffic monitoring, router experimentation, signal analysis concepts, protocol inspection.</p>
+                        </div>
+                        <div class="interest-block">
+                            <h4 class="font-bold text-lg mb-4">Security & Reverse Eng.</h4>
+                            <p class="text-neutral-400 text-sm font-light leading-relaxed">Obfuscation analysis, low-level debugging, embedded communication systems.</p>
+                        </div>
+                        <div class="interest-block">
+                            <h4 class="font-bold text-lg mb-4">Hardware + Experimental</h4>
+                            <p class="text-neutral-400 text-sm font-light leading-relaxed">RF sensing concepts, seismic sensing, sensor fusion, microcontroller experimentation.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-neutral-900/30 p-8 border border-white/5 relative overflow-hidden">
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-8">Philosophy</h2>
+                    <blockquote class="text-xl font-light italic mb-8">
+                        "I like projects that combine theory with implementation. The best systems aren’t just technically impressive — they’re understandable, efficient, and actually usable."
+                    </blockquote>
+                    <p class="font-mono text-[10px] text-neutral-500 uppercase tracking-tighter">
+                        LEARN_BY_BUILDING = TRUE;<br>
+                        TEST_QUICKLY = TRUE;<br>
+                        OPTIMIZE_LATER = TRUE;
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="py-32 bg-white text-black" id="skills">
+            <div class="container">
+                <div class="flex justify-between items-end mb-24">
+                    <h2 class="text-4xl md:text-6xl font-bold tracking-tighter">TECHNICAL_STACK</h2>
+                    <span class="font-mono text-[10px] opacity-30">PROBE_RESULT: 100%_CAPACITY</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 sm:gap-24">
+                    <div class="skill-group border-l border-black/10 pl-6">
+                        <h2 class="text-[10px] font-mono uppercase tracking-widest opacity-50 mb-6 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full border border-black"></span> Languages
+                        </h2>
+                        <ul class="font-bold text-3xl tracking-tighter space-y-1">
+                            <li>JavaScript</li>
+                            <li>Dart</li>
+                            <li>Python</li>
+                            <li>SQL</li>
+                        </ul>
+                    </div>
+                    <div class="skill-group border-l border-black/10 pl-6">
+                        <h2 class="text-[10px] font-mono uppercase tracking-widest opacity-50 mb-6 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full border border-black"></span> Frameworks
+                        </h2>
+                        <ul class="font-bold text-3xl tracking-tighter space-y-1">
+                            <li>Flutter</li>
+                            <li>Node.js</li>
+                            <li>ONNX Runtime</li>
+                            <li>MySQL</li>
+                        </ul>
+                    </div>
+                    <div class="md:col-span-2 skill-group border-l border-black/10 pl-6">
+                        <h2 class="text-[10px] font-mono uppercase tracking-widest opacity-50 mb-6 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full border border-black"></span> Specializations
+                        </h2>
+                        <div class="flex flex-wrap gap-x-12 gap-y-6 text-sm font-mono uppercase tracking-tight">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-black font-bold">AI Inference</span>
+                                <span class="text-[9px] opacity-40">ONNX / EDGE</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <span class="text-black font-bold">Mobile Dev</span>
+                                <span class="text-[9px] opacity-40">FLUTTER / DART</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <span class="text-black font-bold">Backend Systems</span>
+                                <span class="text-[9px] opacity-40">NODE / MYSQL</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <span class="text-black font-bold">Networking</span>
+                                <span class="text-[9px] opacity-40">PROTOCOLS / ANALYSIS</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <span class="text-black font-bold">Reverse Eng.</span>
+                                <span class="text-[9px] opacity-40">LOW-LEVEL / DEBUG</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <span class="text-black font-bold">Embedded Exp.</span>
+                                <span class="text-[9px] opacity-40">MCU / SENSORS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="py-32 min-h-[80vh] flex flex-col justify-center" id="contact">
+            <div class="container text-center">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-12">Transmission_Request</h2>
+                <h3 class="text-4xl md:text-7xl font-bold tracking-tighter mb-16 max-w-4xl mx-auto">
+                    Interested in collaborating or discussing AI + low-level tech?
+                </h3>
+                <div class="flex flex-wrap justify-center gap-12 font-mono text-lg">
+                    <a href="#" class="hover:opacity-50 transition-opacity">GITHUB</a>
+                    <a href="mailto:your-email" class="hover:opacity-50 transition-opacity">EMAIL</a>
+                    <a href="#" class="hover:opacity-50 transition-opacity">DISCORD</a>
+                    <a href="#" class="hover:opacity-50 transition-opacity">LINKEDIN</a>
+                </div>
+                <div class="mt-32">
+                    <p class="font-mono text-sm opacity-50 italic">
+                        “Build first. Optimize later. Understand always.”
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-8 border-t border-white/5">
+        <div class="container flex justify-between items-center font-mono text-[10px] opacity-30">
+            <span>&copy; 2026 AHMED_ELASHRY. ALL_RIGHTS_RESERVED.</span>
+            <span>SYSTEM_STATUS: OPERATIONAL</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
